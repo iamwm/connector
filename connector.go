@@ -5,10 +5,10 @@ import (
 	mq "github.com/iamwm/connector/util/rabbitmq"
 )
 
-func MongoConnect() {
-	mongo.InitMongoHandler()
+func MongoConnect(confPath string) bool {
+	return mongo.InitMongoHandler(confPath)
 }
 
-func RabbitmqConnect() {
-	mq.InitRabbitMqHandler()
+func RabbitmqConnect(confPath string) bool {
+	return mq.InitRabbitMqHandler(confPath)
 }

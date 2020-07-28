@@ -12,17 +12,17 @@ import (
 	"time"
 )
 
-func InitMongoHandler() {
+func InitMongoHandler(confPath string) bool {
 	var globalStore = store.STORE
 	log.Println("START INIT MONGO HANDLER")
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer cancel()
 
-	mongoConfig, err := conf.InitMongoConfig("")
+	mongoConfig, err := conf.InitMongoConfig(confPath)
 	if err != nil {
 		log.Println(err)
 		log.Println(exception.ErrMongoConfig)
-		return
+		return false
 	}
 	globalStore.MongoConf = mongoConfig
 	cs := "mongodb://" + mongoConfig.Host + ":" + mongoConfig.Port
@@ -30,15 +30,16 @@ func InitMongoHandler() {
 
 	if err != nil {
 		log.Println("Mongo connect failed")
-		return
+		return false
 	}
 	//defer client.Disconnect(ctx)
 	err = client.Ping(ctx, readpref.Primary())
 	if err != nil {
 		log.Println("mongo connect failed")
-		return
+		return false
 	}
 
 	globalStore.Mongo = client
 	log.Println("MONGO HANDLER INIT COMPLETE")
+	return true
 }

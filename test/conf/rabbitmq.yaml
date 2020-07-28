@@ -1,0 +1,10 @@
+host: 192.168.12.252
+port: 5672
+user: rabbitmq
+password: realtech@123
+exchange: jmzc
+queue: jmzc_device_status_compute
+routing_keys:
+  - ms_processed_iot_data_pushing
+  - iot_device_status_cfg
+  - iot_device_status_run

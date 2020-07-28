@@ -24,7 +24,7 @@ func InitMongoHandler() {
 		log.Println(exception.ErrMongoConfig)
 		return
 	}
-
+	globalStore.MongoConf = mongoConfig
 	cs := "mongodb://" + mongoConfig.Host + ":" + mongoConfig.Port
 	client, err := mongo.Connect(ctx, options.Client().ApplyURI(cs))
 

@@ -17,6 +17,7 @@ func InitRabbitMqHandler() {
 		log.Println(exception.ErrRabbitmqConfig)
 		return
 	}
+	globalStore.RabbitmqConf = rabbitmqConfig
 	conn, err := wrapper.Dial("amqp://" + rabbitmqConfig.User + ":" + rabbitmqConfig.Password + "@" + rabbitmqConfig.Host + ":" + rabbitmqConfig.Port + "/")
 	if err != nil {
 		log.Println("Mq connect failed")

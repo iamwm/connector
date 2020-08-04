@@ -50,3 +50,25 @@ func InitRabbitmqConfig(configPath string) (*MqConfig, error) {
 		return rabbitmqConfigInfo, nil
 	}
 }
+
+func InitRedisConfig(configPath string) (*RedisConfig, error) {
+	var redisConfigInfo = &RedisConfig{}
+	log.Printf("Redis init task started")
+	if configPath == "" {
+		log.Printf("use default redis config path")
+		workPath, err := os.Getwd()
+		if err != nil {
+			return redisConfigInfo, err
+		}
+		configPath = filepath.Join(workPath, "conf", "redis.yaml")
+	}
+	if f, err := os.Open(configPath); err != nil {
+		return redisConfigInfo, err
+	} else {
+		err := yaml.NewDecoder(f).Decode(redisConfigInfo)
+		if err != nil {
+			return redisConfigInfo, err
+		}
+		return redisConfigInfo, nil
+	}
+}

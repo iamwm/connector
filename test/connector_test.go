@@ -48,3 +48,32 @@ func TestRabbitmqConnect(t *testing.T) {
 		})
 	}
 }
+
+func TestRedisConnect(t *testing.T) {
+	type args struct {
+		configPath string
+	}
+	tests := []struct {
+		name string
+		args args
+		want bool
+	}{
+		{
+			"Redis connect success",
+			args{""},
+			true,
+		},
+		{
+			"Redis connect fail",
+			args{"../"},
+			false,
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			if got := connector.RedisConnect(tt.args.configPath); got != tt.want {
+				t.Errorf("RedisConnect() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
